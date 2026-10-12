@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinh viên - Quản lý sinh viên</title>
+    <link rel="stylesheet" href="sinh-vien.css">
+    <script src="script.js" defer></script>
+    <script src="sinh-vien.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">SV</div>
+            <div><h1>QUẢN LÝ SINH VIÊN</h1>
+                <p>Cổng thông tin học tập</p>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html">Tổng quan</a>
+            <a class="active" href="sinh-vien.html">Sinh viên</a>
+            <a href="ket-qua.html">Kết quả học tập</a>
+            <a href="lich-hoc.html">Lịch học</a>
+            <a href="hoc-phi.html">Học phí</a>
+        </div>
+    </nav>
+    <main>
+        <div class="page-heading">
+            <div>
+                <h2>Danh sách sinh viên</h2>
+                <p>Thêm, sửa, xóa và tìm kiếm sinh viên.</p>
+            </div>
+            <span class="count" id="svCount">0 sinh viên</span>
+        </div>
+
+        <div class="search-box">
+            <label for="svSearch">Tìm sinh viên</label>
+            <div class="search-row">
+                <input id="svSearch" type="text" placeholder="Nhập mã, họ tên, lớp, ngành hoặc email">
+                <button id="svSearchBtn" type="button">Tìm kiếm</button>
+                <button id="svClearBtn" class="secondary" type="button">Xóa tìm kiếm</button>
+            </div>
+            <div class="filter-row">
+                <select id="svStatusFilter" aria-label="Lọc theo trạng thái">
+                    <option value="">Tất cả trạng thái</option>
+                    <option>Đang học</option>
+                    <option>Bảo lưu</option>
+                    <option>Thôi học</option>
+                </select>
+                <select id="svSort" aria-label="Sắp xếp">
+                    <option value="new">Mới thêm trước</option>
+                    <option value="code">Theo mã sinh viên</option>
+                    <option value="name">Theo tên A-Z</option>
+                </select>
+                <div class="right-actions">
+                    <button id="svAddBtn" class="add-btn" type="button">+ Thêm sinh viên</button>
+                    <button id="svHistoryBtn" class="history-btn" type="button">Lịch sử</button>
+                </div>
+            </div>
+            <p id="svMessage" class="help-text">Đang hiển thị toàn bộ sinh viên.</p>
+        </div>
+
+        <div class="table-wrap">
+            <table id="svTable">
+                <thead><tr><th>STT</th><th>Mã sinh viên</th><th>Họ và tên</th><th>Giới tính</th><th>Ngày sinh</th><th>Lớp</th><th>Ngành</th><th>Email</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                <tbody id="svBody"></tbody>
+            </table>
+        </div>
+        <div class="pager"><button id="svPrev" class="secondary" type="button">‹ Trước</button><span id="svPage"></span><button id="svNext" class="secondary" type="button">Sau ›</button></div>
+    </main>
+    <footer>Website quản lý sinh viên · <span class="current-year"></span></footer>
+
+    <!-- Hộp thoại thêm / sửa sinh viên -->
+    <div id="svModal" class="sv-modal" hidden>
+        <div class="sv-modal-box" role="dialog" aria-modal="true" aria-labelledby="svModalTitle">
+            <h3 id="svModalTitle">Thêm sinh viên</h3>
+            <label>Mã sinh viên<input id="svCode" type="text" placeholder="Ví dụ: SV004"></label>
+            <label>Họ và tên<input id="svName" type="text" placeholder="Ví dụ: Nguyễn Văn A"></label>
+            <div class="field">Giới tính
+                <div class="radio-row"><label><input type="radio" name="svGender" value="Nam" checked> Nam</label><label><input type="radio" name="svGender" value="Nữ"> Nữ</label><label><input type="radio" name="svGender" value="Khác"> Khác</label></div>
+            </div>
+            <label>Ngày sinh<input id="svBirth" type="date"></label>
+            <label>Lớp<input id="svClass" type="text" placeholder="Ví dụ: CNTT1"></label>
+            <label>Ngành<input id="svMajor" type="text" placeholder="Ví dụ: Công nghệ thông tin"></label>
+            <label>Email<input id="svEmail" type="email" placeholder="Ví dụ: a@gmail.com"></label>
+            <label>Trạng thái<select id="svState"><option>Đang học</option><option>Bảo lưu</option><option>Thôi học</option></select></label>
+            <div class="modal-actions"><button id="svCancel" class="secondary" type="button">Hủy</button><button id="svSave" type="button">Lưu</button></div>
+        </div>
+    </div>
+    <!-- Hộp thoại lịch sử thao tác -->
+    <div id="svHistoryModal" class="sv-modal" hidden>
+        <div class="sv-modal-box" role="dialog" aria-modal="true" aria-labelledby="svHistoryTitle">
+            <h3 id="svHistoryTitle">Lịch sử thao tác</h3>
+            <ul id="svHistoryList" class="history-list"></ul>
+            <div class="modal-actions"><button id="svHistoryClear" class="secondary" type="button">Xóa lịch sử</button><button id="svHistoryClose" type="button">Đóng</button></div>
+        </div>
+    </div>
+    <div id="svToast" aria-live="polite"></div>
+</body>
+</html>
